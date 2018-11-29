@@ -1,6 +1,6 @@
 ﻿namespace AutoReservation.Dal.Entities
 {
-    internal class StandardAuto : Auto
+    public class StandardAuto : Auto
     {
     }
 }

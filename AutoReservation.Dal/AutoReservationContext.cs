@@ -32,8 +32,8 @@ namespace AutoReservation.Dal
             modelBuilder.Entity<Auto>()
                 .HasDiscriminator<int>("Auto")
                 .HasValue<StandardAuto>(0)
-                .HasValue<Luxusklasse>(1)
-                .HasValue<Mittelklasseauto>(2);
+                .HasValue<LuxusklasseAuto>(1)
+                .HasValue<MittelklasseAuto>(2);
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿namespace AutoReservation.Dal.Entities
 {
-    internal class Mittelklasseauto : Auto
+    public class MittelklasseAuto : Auto
     {
     }
 }
