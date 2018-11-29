@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AutoReservation.Dal.Entities
@@ -13,6 +14,7 @@ namespace AutoReservation.Dal.Entities
 
         public string Nachname { get; set; }
 
+        [Timestamp]
         public byte[] RowVersion { get; set; }
 
         public string Vorname { get; set; }

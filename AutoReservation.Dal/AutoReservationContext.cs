@@ -32,10 +32,12 @@ namespace AutoReservation.Dal
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Kunde>()
-                .ToTable("Kunde");
+                .ToTable("Kunde")
+                .Property(p => p.RowVersion);
 
             modelBuilder.Entity<Auto>()
-                .ToTable("Auto");
+                .ToTable("Auto")
+                .Property(p => p.RowVersion);
 
             modelBuilder.Entity<Reservation>()
                 .ToTable("Reservation")
