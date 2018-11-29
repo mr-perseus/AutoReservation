@@ -8,7 +8,7 @@ namespace AutoReservation.Dal
 {
     public class AutoReservationContext
         : DbContext
-        // TEST 
+        
     {
         public DbSet<Auto> Autos { get; set; }
         public DbSet<Kunde> Kunden { get; set; }
