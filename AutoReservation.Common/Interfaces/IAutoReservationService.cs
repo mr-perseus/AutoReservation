@@ -24,6 +24,22 @@ namespace AutoReservation.Common.Interfaces
         List<AutoDto> AutoList();
 
 
+        [OperationContract]
+        KundeDto GetKundeById(int kundeId);
+
+        [OperationContract]
+        void InsertKunde(KundeDto auto);
+
+        [OperationContract]
+        void UpdateKunde(KundeDto auto);
+
+        [OperationContract]
+        void DeleteKunde(KundeDto auto);
+
+        [OperationContract]
+        List<KundeDto> KundeList();
+
+
 
     }
 }

@@ -12,7 +12,7 @@ namespace AutoReservation.Service.Wcf
 {
     public class AutoReservationService : IAutoReservationService
     {
-
+        #region Auto
         public AutoDto GetAutoById(int autoId)
         {
             WriteActualMethod();
@@ -59,8 +59,57 @@ namespace AutoReservation.Service.Wcf
             return autoDtos;
         }
 
+        #endregion
 
+        #region Kunde
 
+        public KundeDto GetKundeById(int kundeId)
+        {
+            WriteActualMethod();
+            return new KundeManager()
+                .GetById(kundeId)
+                .ConvertToDto();
+        }
+
+        public void InsertKunde(KundeDto kunde)
+        {
+            WriteActualMethod();
+            Kunde kundeEntity = kunde.ConvertToEntity();
+            new KundeManager()
+                .Add(kundeEntity);
+        }
+
+        public void UpdateKunde(KundeDto kunde)
+        {
+
+            WriteActualMethod();
+            Kunde kundeEntity = kunde.ConvertToEntity();
+            new KundeManager()
+                .Update(kundeEntity);
+
+        }
+
+        public void DeleteKunde(KundeDto kunde)
+        {
+            WriteActualMethod();
+            Kunde kundeEntity = kunde.ConvertToEntity();
+            new KundeManager()
+                .Remove(kundeEntity);
+        }
+
+        public List<KundeDto> KundeList()
+        {
+            WriteActualMethod();
+            List<KundeDto> kundeDtos = new List<KundeDto>();
+            List<Kunde> kundeEntities = new KundeManager().List;
+            foreach (Kunde a in kundeEntities)
+            {
+                kundeDtos.Add(a.ConvertToDto());
+            }
+            return kundeDtos;
+        }
+
+        #endregion
 
         private static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
