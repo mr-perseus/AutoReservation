@@ -1,14 +1,24 @@
 ﻿using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
+using Microsoft.EntityFrameworkCore;
 
 namespace AutoReservation.BusinessLayer
 {
     public abstract class ManagerBase
     {
-        protected static OptimisticConcurrencyException<T> CreateOptimisticConcurrencyException<T>(AutoReservationContext context, T entity)
+        protected void HandleDbUpdateException<T>(DbUpdateException exception, AutoReservationContext context, T entity)
             where T : class
         {
-            T dbEntity = (T)context.Entry(entity)
+            if (exception is DbUpdateConcurrencyException) throw CreateOptimisticConcurrencyException(context, entity);
+
+            // TODO Other possibilities
+        }
+
+        protected static OptimisticConcurrencyException<T> CreateOptimisticConcurrencyException<T>(
+            AutoReservationContext context, T entity)
+            where T : class
+        {
+            T dbEntity = (T) context.Entry(entity)
                 .GetDatabaseValues()
                 .ToObject();
 
