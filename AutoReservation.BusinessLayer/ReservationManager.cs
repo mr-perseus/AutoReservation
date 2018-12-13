@@ -15,8 +15,8 @@ namespace AutoReservation.BusinessLayer
                 using (AutoReservationContext context = new AutoReservationContext())
                 {
 
-                    Category cat = new Category
-                    { };
+                    // Category cat = new Category
+                    // { };
                         
                     return context.Reservationen.ToList();
                 }

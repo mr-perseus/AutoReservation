@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Diagnostics;
+using AutoReservation.Common.Interfaces;
 
 namespace AutoReservation.Service.Wcf
 {
-    public class AutoReservationService
+    public class AutoReservationService : IAutoReservationService
     {
 
         private static void WriteActualMethod()
