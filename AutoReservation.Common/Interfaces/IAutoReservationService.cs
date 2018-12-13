@@ -8,11 +8,21 @@ namespace AutoReservation.Common.Interfaces
     [ServiceContract]
     public interface IAutoReservationService
     {
-        List<AutoDto> Autos { [OperationContract] get; }
+        [OperationContract]
+        AutoDto GetAutoById(int autoId);
 
-        List<KundeDto> Kunde { [OperationContract] get; }
+        [OperationContract]
+        void InsertAuto(AutoDto auto);
 
-        List<ReservationDto> Reservation { [OperationContract] get; }
+        [OperationContract]
+        void UpdateAuto(AutoDto auto);
+
+        [OperationContract]
+        void DeleteAuto(AutoDto auto);
+
+        [OperationContract]
+        List<AutoDto> AutoList();
+
 
 
     }
