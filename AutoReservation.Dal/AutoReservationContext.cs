@@ -8,10 +8,6 @@ namespace AutoReservation.Dal
 {
     public class AutoReservationContext
         : DbContext
-<<<<<<< HEAD
-        
-=======
->>>>>>> fa78c6142a662262c6140caf49c3cf470533eb77
     {
         public static readonly LoggerFactory LoggerFactory = new LoggerFactory(
             new[] {new ConsoleLoggerProvider((_, logLevel) => logLevel >= LogLevel.Information, true)}
