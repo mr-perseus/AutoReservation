@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.ServiceModel;
 using AutoReservation.BusinessLayer;
 using AutoReservation.BusinessLayer.Exceptions;
@@ -102,11 +103,59 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
             List<KundeDto> kundeDtos = new List<KundeDto>();
             List<Kunde> kundeEntities = new KundeManager().List;
-            foreach (Kunde a in kundeEntities)
+            foreach (Kunde k in kundeEntities)
             {
-                kundeDtos.Add(a.ConvertToDto());
+                kundeDtos.Add(k.ConvertToDto());
             }
             return kundeDtos;
+        }
+
+        #endregion
+
+        #region Reservation
+
+        public ReservationDto GetReservationById(int reservationId)
+        {
+            WriteActualMethod();
+            return new ReservationManager()
+                .GetById(reservationId)
+                .ConvertToDto();
+        }
+
+        public void InsertReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            Reservation reservationEntity = reservation.ConvertToEntity();
+            new ReservationManager()
+                .Add(reservationEntity);
+        }
+
+        public void UpdateReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            Reservation reservationEntity = reservation.ConvertToEntity();
+            new ReservationManager()
+                .Update(reservationEntity);
+        }
+
+        public void DeleteReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            Reservation reservationEntity = reservation.ConvertToEntity();
+            new ReservationManager()
+                .Remove(reservationEntity);
+        }
+
+        public List<ReservationDto> ReservationList()
+        {
+            List<ReservationDto> reservationDtos = new List<ReservationDto>();
+            List<Reservation> reservationEntities = new ReservationManager().List;
+            foreach(Reservation r in reservationEntities)
+            {
+                reservationDtos.Add(r.ConvertToDto());
+            }
+
+            return reservationDtos;
         }
 
         #endregion
