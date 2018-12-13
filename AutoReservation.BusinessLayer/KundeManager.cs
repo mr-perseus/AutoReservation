@@ -67,5 +67,10 @@ namespace AutoReservation.BusinessLayer
                 }
             }
         }
+
+        public Kunde GetById(int id)
+        {
+            return List.FirstOrDefault(entry => entry.Id == id);
+        }
     }
 }

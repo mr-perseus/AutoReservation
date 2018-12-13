@@ -71,5 +71,10 @@ namespace AutoReservation.BusinessLayer
                 }
             }
         }
+
+        public Reservation GetById(int id)
+        {
+            return List.FirstOrDefault(entry => entry.ReservationsNr == id);
+        }
     }
 }
