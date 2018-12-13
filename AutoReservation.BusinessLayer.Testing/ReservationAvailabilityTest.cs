@@ -8,41 +8,17 @@ namespace AutoReservation.BusinessLayer.Testing
     public class ReservationAvailabilityTest
         : TestBase
     {
-        private ReservationManager target;
-        private ReservationManager Target => target ?? (target = new ReservationManager());
-
         public ReservationAvailabilityTest()
         {
             // Prepare reservation
-            // Reservation reservation = Target.GetById(1);
-            // reservation.Von = DateTime.Today;
-            // reservation.Bis = DateTime.Today.AddDays(1);
-            // Target.Update(reservation);
+            Reservation reservation = Target.GetById(1);
+            reservation.Von = DateTime.Today;
+            reservation.Bis = DateTime.Today.AddDays(1);
+            Target.Update(reservation);
         }
 
-        [Fact]
-        public void ScenarioOkay01Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioOkay02Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioOkay03Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioOkay04Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
+        private ReservationManager _target;
+        private ReservationManager Target => _target ?? (_target = new ReservationManager());
 
         [Fact]
         public void ScenarioNotOkay01Test()
@@ -70,6 +46,30 @@ namespace AutoReservation.BusinessLayer.Testing
 
         [Fact]
         public void ScenarioNotOkay05Test()
+        {
+            throw new NotImplementedException("Test not implemented.");
+        }
+
+        [Fact]
+        public void ScenarioOkay01Test()
+        {
+            throw new NotImplementedException("Test not implemented.");
+        }
+
+        [Fact]
+        public void ScenarioOkay02Test()
+        {
+            throw new NotImplementedException("Test not implemented.");
+        }
+
+        [Fact]
+        public void ScenarioOkay03Test()
+        {
+            throw new NotImplementedException("Test not implemented.");
+        }
+
+        [Fact]
+        public void ScenarioOkay04Test()
         {
             throw new NotImplementedException("Test not implemented.");
         }

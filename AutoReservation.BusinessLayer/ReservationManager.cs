@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -30,6 +32,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
+                    ValidateDateAndAuto(reservation);
                     context.Add(reservation);
                     context.SaveChanges();
                 }
@@ -46,6 +49,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
+                    ValidateDateAndAuto(reservation);
                     context.Update(reservation);
                     context.SaveChanges();
                 }
@@ -75,6 +79,25 @@ namespace AutoReservation.BusinessLayer
         public Reservation GetById(int id)
         {
             return List.FirstOrDefault(entry => entry.ReservationsNr == id);
+        }
+
+        private static void ValidateDateAndAuto(Reservation reservation)
+        {
+            if (!AreDatesTwentyForHours(reservation.Von, reservation.Bis))
+                throw new InvalidDateRangeException("Dates are invalid", reservation.Von, reservation.Bis);
+
+            if (!IsAutoAvailable(reservation)) throw new AutoUnavailableException("Auto is not available");
+        }
+
+        private static bool AreDatesTwentyForHours(DateTime from, DateTime until)
+        {
+            return (until.Date - from.Date).TotalHours >= 24;
+        }
+
+        private static bool IsAutoAvailable(Reservation reservation)
+        {
+            return true;
+            // TODO IMPLEMENT
         }
     }
 }

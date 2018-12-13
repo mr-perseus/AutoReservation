@@ -7,20 +7,8 @@ namespace AutoReservation.BusinessLayer.Testing
     public class ReservationDateRangeTest
         : TestBase
     {
-        private ReservationManager target;
-        private ReservationManager Target => target ?? (target = new ReservationManager());
-
-        [Fact]
-        public void ScenarioOkay01Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
-
-        [Fact]
-        public void ScenarioOkay02Test()
-        {
-            throw new NotImplementedException("Test not implemented.");
-        }
+        private ReservationManager _target;
+        private ReservationManager Target => _target ?? (_target = new ReservationManager());
 
         [Fact]
         public void ScenarioNotOkay01Test()
@@ -36,6 +24,18 @@ namespace AutoReservation.BusinessLayer.Testing
 
         [Fact]
         public void ScenarioNotOkay03Test()
+        {
+            throw new NotImplementedException("Test not implemented.");
+        }
+
+        [Fact]
+        public void ScenarioOkay01Test()
+        {
+            throw new NotImplementedException("Test not implemented.");
+        }
+
+        [Fact]
+        public void ScenarioOkay02Test()
         {
             throw new NotImplementedException("Test not implemented.");
         }
