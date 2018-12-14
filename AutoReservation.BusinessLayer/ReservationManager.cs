@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
@@ -96,8 +97,17 @@ namespace AutoReservation.BusinessLayer
 
         private static bool IsAutoAvailable(Reservation reservation)
         {
-            return true;
-            // TODO IMPLEMENT
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                var count = (from Reservation in context.Reservationen
+                    where Reservation.AutoId == reservation.AutoId &&
+                          Reservation.ReservationsNr != reservation.ReservationsNr &&
+                          ((reservation.Von <= Reservation.Von && reservation.Von > Reservation.Von) ||
+                           (reservation.Von >= Reservation.Von && reservation.Von < Reservation.Bis))
+                    select reservation);
+                
+                return !count.Any();
+            }
         }
     }
 }
