@@ -40,6 +40,21 @@ namespace AutoReservation.Common.Interfaces
         List<KundeDto> KundeList();
 
 
+        [OperationContract]
+        ReservationDto GetReservationById(int ReservationId);
+
+        [OperationContract]
+        void InsertReservation(ReservationDto auto);
+
+        [OperationContract]
+        void UpdateReservation(ReservationDto auto);
+
+        [OperationContract]
+        void DeleteReservation(ReservationDto auto);
+
+        [OperationContract]
+        List<ReservationDto> ReservationList();
+
 
     }
 }
