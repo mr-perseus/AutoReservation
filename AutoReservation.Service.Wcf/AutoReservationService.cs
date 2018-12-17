@@ -288,5 +288,6 @@ namespace AutoReservation.Service.Wcf
 
         private static void WriteActualMethod()
             => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
+
     }
 }

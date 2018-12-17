@@ -222,7 +222,7 @@ namespace AutoReservation.Service.Wcf.Testing
         public void UpdateReservationTest()
         {
             ReservationDto reservationtoupdate = Target.GetReservationById(4);
-            reservationtoupdate.Bis = new DateTime(2019, 12, 10);
+            reservationtoupdate.Bis = new DateTime(2020, 12, 10);
             Target.UpdateReservation(reservationtoupdate);
 
             ReservationDto reservationupdated = Target.GetReservationById(4);
@@ -269,10 +269,10 @@ namespace AutoReservation.Service.Wcf.Testing
         public void UpdateReservationWithOptimisticConcurrencyTest()
         {
             ReservationDto reservationtoupdate1 = Target.GetReservationById(4);
-            reservationtoupdate1.Bis = new DateTime(2019, 06, 06);
+            reservationtoupdate1.Bis = new DateTime(2020, 06, 06);
 
             ReservationDto reservationtoupdate2 = Target.GetReservationById(4);
-            reservationtoupdate2.Bis = new DateTime(2019, 07, 07);
+            reservationtoupdate2.Bis = new DateTime(2020, 07, 07);
 
             Target.UpdateReservation(reservationtoupdate1);
 
@@ -318,6 +318,7 @@ namespace AutoReservation.Service.Wcf.Testing
         {
             ReservationDto reservationtoupdate = Target.GetReservationById(4);
             reservationtoupdate.Von = new DateTime(2019, 06, 06);
+            reservationtoupdate.Bis = new DateTime(2019, 06, 05);
 
             Assert.Throws<FaultException<InvalidDateRangeFault>>(() => Target.UpdateReservation(reservationtoupdate));
         }
@@ -325,7 +326,11 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void UpdateReservationWithAutoNotAvailableTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            ReservationDto reservationtoupdate = Target.GetReservationById(4);
+            reservationtoupdate.Von = new DateTime(2020, 01, 15);
+            reservationtoupdate.Bis = new DateTime(2020, 01, 17);
+
+            Assert.Throws<FaultException<AutoUnavailableFault>>(() => Target.UpdateReservation(reservationtoupdate));
         }
 
         #endregion
@@ -336,6 +341,7 @@ namespace AutoReservation.Service.Wcf.Testing
         public void CheckAvailabilityIsTrueTest()
         {
             throw new NotImplementedException("Test not implemented.");
+
         }
 
         [Fact]
