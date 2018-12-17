@@ -41,7 +41,7 @@ namespace AutoReservation.Service.Wcf
                 new AutoManager()
                     .Update(autoEntity);
             }
-            catch (OptimisticConcurrencyException<Auto>)
+            catch (OptimisticConcurrencyException<Auto> e)
             {
                 throw new FaultException<OptimisticConcurrencyFault>(
                     new OptimisticConcurrencyFault
@@ -176,10 +176,18 @@ namespace AutoReservation.Service.Wcf
 
         public void InsertReservation(ReservationDto reservation)
         {
-            WriteActualMethod();
-            Reservation reservationEntity = reservation.ConvertToEntity();
-            new ReservationManager()
-                .Add(reservationEntity);
+            try
+            {
+                WriteActualMethod();
+                Reservation reservationEntity = reservation.ConvertToEntity();
+                new ReservationManager()
+                    .Add(reservationEntity);
+            }
+            catch(OptimisticConcurrencyException<Reservation>)
+            {
+
+            }
+             
         }
 
         public void UpdateReservation(ReservationDto reservation)

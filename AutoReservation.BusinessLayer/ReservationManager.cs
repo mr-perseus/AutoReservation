@@ -18,10 +18,12 @@ namespace AutoReservation.BusinessLayer
             {
                 using (AutoReservationContext context = new AutoReservationContext())
                 {
-                    // Category cat = new Category
-                    // { };
+                    
 
-                    return context.Reservationen.ToList();
+                    return context.Reservationen
+                        .Include(r => r.Kunde)
+                        .Include(r => r.Auto)
+                        .ToList();
                 }
             }
         }
@@ -79,12 +81,18 @@ namespace AutoReservation.BusinessLayer
 
         public Reservation GetById(int id)
         {
-            return List.FirstOrDefault(entry => entry.ReservationsNr == id);
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                return context.Reservationen
+                    .Include(r => r.Kunde)
+                    .Include(r => r.Auto)
+                    .FirstOrDefault(entry => entry.ReservationsNr == id);
+            }
         }
 
         private static void ValidateDateAndAuto(Reservation reservation)
         {
-            if (!AreDatesTwentyForHours(reservation.Von, reservation.Bis))
+            if (AreDatesTwentyForHours(reservation.Von, reservation.Bis))
                 throw new InvalidDateRangeException("Dates are invalid", reservation.Von, reservation.Bis);
 
             if (!IsAutoAvailable(reservation)) throw new AutoUnavailableException("Auto is not available");
