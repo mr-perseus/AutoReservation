@@ -7,6 +7,7 @@ using AutoReservation.BusinessLayer;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Common.DataTransferObjects.Faults;
 using AutoReservation.Dal.Entities;
 
 namespace AutoReservation.Service.Wcf
@@ -32,20 +33,47 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateAuto(AutoDto auto)
         {
-         
+
+            try
+            {
                 WriteActualMethod();
                 Auto autoEntity = auto.ConvertToEntity();
                 new AutoManager()
                     .Update(autoEntity);
-            
+            }
+            catch (OptimisticConcurrencyException<Auto>)
+            {
+                throw new FaultException<OptimisticConcurrencyFault>(
+                    new OptimisticConcurrencyFault
+                    {
+                        Operation = "Update",
+                        Description = "Auto could not be updated. Optimistic Concurrency Fault!"
+                    }
+                    );
+            }
+
         }
 
         public void DeleteAuto(AutoDto auto)
         {
-            WriteActualMethod();
-            Auto autoEntity = auto.ConvertToEntity();
-            new AutoManager()
-                .Remove(autoEntity);
+            try
+            {
+                WriteActualMethod();
+                Auto autoEntity = auto.ConvertToEntity();
+                new AutoManager()
+                    .Remove(autoEntity);
+            }
+            catch (OptimisticConcurrencyException<Auto> e)
+            {
+                throw new FaultException<OptimisticConcurrencyFault>(
+                    new OptimisticConcurrencyFault
+                    {
+                        Operation = "Delete",
+                        Description = "Auto could not be removed. Either it was edited by someone else or it has been removed already."
+                    }
+                        
+                );
+            }
         }
 
         public List<AutoDto> AutoList()
@@ -82,20 +110,44 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateKunde(KundeDto kunde)
         {
-
-            WriteActualMethod();
-            Kunde kundeEntity = kunde.ConvertToEntity();
-            new KundeManager()
-                .Update(kundeEntity);
-
+            try
+            {
+                WriteActualMethod();
+                Kunde kundeEntity = kunde.ConvertToEntity();
+                new KundeManager()
+                    .Update(kundeEntity);
+            }
+            catch (OptimisticConcurrencyException<Kunde> e)
+            {
+                throw new FaultException<OptimisticConcurrencyFault>(
+                    new OptimisticConcurrencyFault
+                    {
+                        Operation = "Update",
+                        Description = "Kunde could not be updated. OptimisticConcurrency Fault!"
+                    }
+                );
+            }
         }
 
         public void DeleteKunde(KundeDto kunde)
         {
-            WriteActualMethod();
-            Kunde kundeEntity = kunde.ConvertToEntity();
-            new KundeManager()
-                .Remove(kundeEntity);
+            try
+            {
+                WriteActualMethod();
+                Kunde kundeEntity = kunde.ConvertToEntity();
+                new KundeManager()
+                    .Remove(kundeEntity);
+            }
+            catch (OptimisticConcurrencyException<Kunde> e)
+            {
+                throw new FaultException<OptimisticConcurrencyFault>(
+                    new OptimisticConcurrencyFault
+                    {
+                        Operation = "Delete",
+                        Description = "Kunde could not be removed. Either it was edited by someone else or it has been removed already."
+                    }
+                );
+            }
         }
 
         public List<KundeDto> KundeList()
@@ -132,25 +184,51 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateReservation(ReservationDto reservation)
         {
-            WriteActualMethod();
-            Reservation reservationEntity = reservation.ConvertToEntity();
-            new ReservationManager()
-                .Update(reservationEntity);
+            try
+            {
+                WriteActualMethod();
+                Reservation reservationEntity = reservation.ConvertToEntity();
+                new ReservationManager()
+                    .Update(reservationEntity);
+            }
+            catch (OptimisticConcurrencyException<Reservation> e)
+            {
+                throw new FaultException<OptimisticConcurrencyFault>(
+                    new OptimisticConcurrencyFault
+                    {
+                        Operation = "Update",
+                        Description = "Reservation could not be updated. OptimisticConcurrency Fault!"
+                    }
+                );
+            }
         }
 
         public void DeleteReservation(ReservationDto reservation)
         {
-            WriteActualMethod();
-            Reservation reservationEntity = reservation.ConvertToEntity();
-            new ReservationManager()
-                .Remove(reservationEntity);
+            try
+            {
+                WriteActualMethod();
+                Reservation reservationEntity = reservation.ConvertToEntity();
+                new ReservationManager()
+                    .Remove(reservationEntity);
+            }
+            catch (OptimisticConcurrencyException<Reservation> e)
+            {
+                throw new FaultException<OptimisticConcurrencyFault>(
+                    new OptimisticConcurrencyFault
+                    {
+                        Operation = "Delete",
+                        Description = "Reservation could not be removed. Either it was edited by someone else or it has been removed already."
+                    }
+                );
+            }
         }
 
         public List<ReservationDto> ReservationList()
         {
             List<ReservationDto> reservationDtos = new List<ReservationDto>();
             List<Reservation> reservationEntities = new ReservationManager().List;
-            foreach(Reservation r in reservationEntities)
+            foreach (Reservation r in reservationEntities)
             {
                 reservationDtos.Add(r.ConvertToDto());
             }
