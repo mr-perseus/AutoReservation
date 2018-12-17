@@ -92,7 +92,7 @@ namespace AutoReservation.BusinessLayer
 
         private static void ValidateDateAndAuto(Reservation reservation)
         {
-            if (AreDatesTwentyForHours(reservation.Von, reservation.Bis))
+            if (!AreDatesTwentyForHours(reservation.Von, reservation.Bis))
                 throw new InvalidDateRangeException("Dates are invalid", reservation.Von, reservation.Bis);
 
             if (!IsAutoAvailable(reservation)) throw new AutoUnavailableException("Auto is not available");

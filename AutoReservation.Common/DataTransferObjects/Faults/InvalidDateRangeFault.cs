@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace AutoReservation.Common.DataTransferObjects.Faults
 {
     [DataContract]
-    class InvalidDateRangeFault
+    public class InvalidDateRangeFault
     {
         [DataMember]
         public string Operation { get; set; }

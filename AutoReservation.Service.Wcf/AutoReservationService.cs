@@ -183,9 +183,27 @@ namespace AutoReservation.Service.Wcf
                 new ReservationManager()
                     .Add(reservationEntity);
             }
-            catch(OptimisticConcurrencyException<Reservation>)
+            catch (InvalidDateRangeException e)
             {
+                throw new FaultException<InvalidDateRangeFault>(
+                    new InvalidDateRangeFault
+                    {
+                        Operation = "Insert",
+                        Description = "Reservation could not be inserted. Date invalid!"
+                    }
+                );
 
+            }
+            catch (AutoUnavailableException e)
+            {
+                throw new FaultException<AutoUnavailableFault>(
+                    new AutoUnavailableFault
+                    {
+                        Operation = "Insert",
+                        Description = "Reservation could not be inserted. Car already reserved!"
+
+                    }
+                    );
             }
              
         }
@@ -206,6 +224,28 @@ namespace AutoReservation.Service.Wcf
                     {
                         Operation = "Update",
                         Description = "Reservation could not be updated. OptimisticConcurrency Fault!"
+                    }
+                );
+            }
+            catch (InvalidDateRangeException e)
+            {
+                throw new FaultException<InvalidDateRangeFault>(
+                    new InvalidDateRangeFault
+                    {
+                        Operation = "Insert",
+                        Description = "Reservation could not be inserted. Date invalid!"
+                    }
+                );
+
+            }
+            catch (AutoUnavailableException e)
+            {
+                throw new FaultException<AutoUnavailableFault>(
+                    new AutoUnavailableFault
+                    {
+                        Operation = "Insert",
+                        Description = "Reservation could not be inserted. Car already reserved!"
+
                     }
                 );
             }
