@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Common.Interfaces
 {
@@ -16,6 +17,7 @@ namespace AutoReservation.Common.Interfaces
         void InsertAuto(AutoDto auto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void UpdateAuto(AutoDto auto);
 
         [OperationContract]
@@ -32,6 +34,7 @@ namespace AutoReservation.Common.Interfaces
         void InsertKunde(KundeDto auto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
         void UpdateKunde(KundeDto auto);
 
         [OperationContract]
@@ -45,9 +48,15 @@ namespace AutoReservation.Common.Interfaces
         ReservationDto GetReservationById(int ReservationId);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        [FaultContract(typeof(InvalidDateRangeFault))]
+        [FaultContract(typeof(AutoUnavailableFault))]
         void InsertReservation(ReservationDto auto);
 
         [OperationContract]
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
+        [FaultContract(typeof(InvalidDateRangeFault))]
+        [FaultContract(typeof(AutoUnavailableFault))]
         void UpdateReservation(ReservationDto auto);
 
         [OperationContract]
