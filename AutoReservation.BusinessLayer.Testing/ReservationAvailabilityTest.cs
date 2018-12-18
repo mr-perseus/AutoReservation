@@ -67,12 +67,15 @@ namespace AutoReservation.BusinessLayer.Testing
         {
             Reservation reservation = new Reservation
             {
-                AutoId = 2, Von = DateTime.Today, Bis = DateTime.Today.AddDays(1)
+                AutoId = 3,
+                Von = DateTime.Today,
+                Bis = DateTime.Today.AddDays(1),
+                KundeId = 4
             };
             Target.Add(reservation);
 
-            Reservation actualReservation = Target.GetById(4); // TODO Jan
-            Assert.Equal(2, actualReservation.AutoId);
+            Reservation actualReservation = Target.GetById(5);
+            Assert.Equal(3, actualReservation.AutoId);
             Assert.Equal(DateTime.Today, actualReservation.Von);
             Assert.Equal(DateTime.Today.AddDays(1), actualReservation.Bis);
             Target.Remove(reservation);
