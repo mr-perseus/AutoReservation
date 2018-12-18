@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Dal;
 using AutoReservation.Dal.Entities;
@@ -18,8 +17,6 @@ namespace AutoReservation.BusinessLayer
             {
                 using (AutoReservationContext context = new AutoReservationContext())
                 {
-                    
-
                     return context.Reservationen
                         .Include(r => r.Kunde)
                         .Include(r => r.Auto)
@@ -32,7 +29,6 @@ namespace AutoReservation.BusinessLayer
         {
             var list = List.Where(r => r.AutoId == auto.Id);
             return new List<Reservation>(list);
-       
         }
 
         public void Add(Reservation reservation)
@@ -42,7 +38,7 @@ namespace AutoReservation.BusinessLayer
                 try
                 {
                     ValidateDateAndAuto(reservation);
-                    context.Add(reservation);
+                    context.Entry(reservation).State = EntityState.Added;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -59,8 +55,7 @@ namespace AutoReservation.BusinessLayer
                 try
                 {
                     ValidateDateAndAuto(reservation);
-                    context.Update(reservation);
-                    
+                    context.Entry(reservation).State = EntityState.Modified;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -76,7 +71,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Remove(reservation);
+                    context.Entry(reservation).State = EntityState.Deleted;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -107,20 +102,20 @@ namespace AutoReservation.BusinessLayer
 
         private static bool AreDatesTwentyForHours(DateTime from, DateTime until)
         {
-            return (until.Date - from.Date).TotalHours >= 24;
+            return DateTime.Compare(from.AddDays(1), until) <= 0;
         }
 
-        private static bool IsAutoAvailable(Reservation reservation)
+        private static bool IsAutoAvailable(Reservation reservationToCreate)
         {
             using (AutoReservationContext context = new AutoReservationContext())
             {
-                var count = (from Reservation in context.Reservationen
-                    where Reservation.AutoId == reservation.AutoId &&
-                          Reservation.ReservationsNr != reservation.ReservationsNr &&
-                          ((reservation.Von <= Reservation.Von && reservation.Von > Reservation.Von) ||
-                           (reservation.Von >= Reservation.Von && reservation.Von < Reservation.Bis))
-                    select reservation);
-                
+                var count = from reservation in context.Reservationen
+                    where reservation.AutoId == reservationToCreate.AutoId &&
+                          reservation.ReservationsNr != reservationToCreate.ReservationsNr &&
+                          (reservationToCreate.Von <= reservation.Von && reservationToCreate.Von > reservation.Von ||
+                           reservationToCreate.Von >= reservation.Von && reservationToCreate.Von < reservation.Bis)
+                    select reservationToCreate;
+
                 return !count.Any();
             }
         }

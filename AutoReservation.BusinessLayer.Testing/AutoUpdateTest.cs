@@ -17,9 +17,9 @@ namespace AutoReservation.BusinessLayer.Testing
             auto.Tagestarif = 500;
             Target.Update(auto);
 
-            Auto autoActual = Target.GetById(auto.Id);
+            Auto actualAuto = Target.GetById(auto.Id);
 
-            Assert.Equal(auto.Tagestarif, autoActual.Tagestarif);
+            Assert.Equal(auto.Tagestarif, actualAuto.Tagestarif);
         }
     }
 }

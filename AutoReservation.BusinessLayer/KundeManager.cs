@@ -26,7 +26,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Add(kunde);
+                    context.Entry(kunde).State = EntityState.Added;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -42,7 +42,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Update(kunde);
+                    context.Entry(kunde).State = EntityState.Modified;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -58,7 +58,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Remove(kunde);
+                    context.Entry(kunde).State = EntityState.Deleted;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
