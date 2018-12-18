@@ -283,6 +283,24 @@ namespace AutoReservation.Service.Wcf
 
             return reservationDtos;
         }
+        
+
+        public bool IsCarAvailable(AutoDto auto, DateTime date)
+        {
+            var list = new ReservationManager().ListWhere(auto.ConvertToEntity());
+            foreach (var item in list)
+            {
+                if (item.Von > date || item.Bis < date)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+
+
+
 
         #endregion
 

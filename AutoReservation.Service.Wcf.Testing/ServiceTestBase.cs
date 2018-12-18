@@ -340,14 +340,20 @@ namespace AutoReservation.Service.Wcf.Testing
         [Fact]
         public void CheckAvailabilityIsTrueTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            AutoDto autotocheck = Target.GetAutoById(4);
+            DateTime availableDate = new DateTime(2021, 10, 10);
+
+            Assert.True(Target.IsCarAvailable(autotocheck, availableDate));
 
         }
 
         [Fact]
         public void CheckAvailabilityIsFalseTest()
         {
-            throw new NotImplementedException("Test not implemented.");
+            AutoDto autotocheck = Target.GetAutoById(2);
+            DateTime unavailableDate = new DateTime(2020, 05, 20);
+
+            Assert.False(Target.IsCarAvailable(autotocheck, unavailableDate));
         }
 
         #endregion

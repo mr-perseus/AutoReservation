@@ -139,6 +139,9 @@ namespace AutoReservation.Service.Wcf
         {
             return ConvertGenericList(entities, ConvertToDto);
         }
+
+
+        
         #endregion
 
         private static List<TTarget> ConvertGenericList<TSource, TTarget>(this IEnumerable<TSource> source, Func<TSource, TTarget> converter)

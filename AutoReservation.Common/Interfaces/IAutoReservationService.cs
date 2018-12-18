@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
 
@@ -54,6 +55,9 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         List<ReservationDto> ReservationList();
+
+        [OperationContract]
+        bool IsCarAvailable(AutoDto auto, DateTime date);
 
 
     }
