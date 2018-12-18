@@ -9,12 +9,6 @@ namespace AutoReservation.BusinessLayer.Testing
     public class ReservationAvailabilityTest
         : TestBase
     {
-        public ReservationAvailabilityTest()
-        {
-            // Prepare reservation
-
-        }
-
         private ReservationManager _target;
         private ReservationManager Target => _target ?? (_target = new ReservationManager());
 
@@ -87,13 +81,49 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void ScenarioNotOkay04Test()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Reservation reservation = new Reservation
+            {
+                AutoId = 3,
+                Von = DateTime.Today,
+                Bis = DateTime.Today.AddDays(6),
+                KundeId = 3
+            };
+            Reservation reservation2 = new Reservation {Von = new DateTime(1990, 1, 1), Bis = new DateTime(1991, 1, 1), AutoId = 1, KundeId = 1};
+            Target.Add(reservation);
+            Target.Add(reservation2);
+
+            reservation2.AutoId = 3;
+            reservation2.Von = DateTime.Today.AddDays(5);
+            reservation2.Bis = DateTime.Today.AddDays(10);
+            reservation2.KundeId = 2;
+
+            Assert.Throws<AutoUnavailableException>(() => Target.Update(reservation2));
+            Target.Remove(reservation);
+            Target.Remove(reservation2);
         }
 
         [Fact]
         public void ScenarioNotOkay05Test()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Reservation reservation = new Reservation
+            {
+                AutoId = 3,
+                Von = DateTime.Today.AddDays(5),
+                Bis = DateTime.Today.AddDays(10),
+                KundeId = 3
+            };
+            Reservation reservation2 = new Reservation { Von = new DateTime(1990, 1, 1), Bis = new DateTime(1991, 1, 1), AutoId = 1, KundeId = 1 };
+            Target.Add(reservation);
+            Target.Add(reservation2);
+
+            reservation2.AutoId = 3;
+            reservation2.Von = DateTime.Today;
+            reservation2.Bis = DateTime.Today.AddDays(6);
+            reservation2.KundeId = 2;
+
+            Assert.Throws<AutoUnavailableException>(() => Target.Update(reservation2));
+            Target.Remove(reservation);
+            Target.Remove(reservation2);
         }
 
         [Fact]
