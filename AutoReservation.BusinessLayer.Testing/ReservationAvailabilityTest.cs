@@ -70,11 +70,10 @@ namespace AutoReservation.BusinessLayer.Testing
                 AutoId = 3,
                 Von = DateTime.Today,
                 Bis = DateTime.Today.AddDays(1),
-                KundeId = 4
             };
             Target.Add(reservation);
 
-            Reservation actualReservation = Target.GetById(5);
+            Reservation actualReservation = Target.GetLastReservation();
             Assert.Equal(3, actualReservation.AutoId);
             Assert.Equal(DateTime.Today, actualReservation.Von);
             Assert.Equal(DateTime.Today.AddDays(1), actualReservation.Bis);
@@ -84,7 +83,18 @@ namespace AutoReservation.BusinessLayer.Testing
         [Fact]
         public void ScenarioOkay03Test()
         {
-            throw new NotImplementedException("Test not implemented.");
+            Reservation reservation = Target.GetById(1);
+            reservation.AutoId = 2;
+            reservation.Von = new DateTime(2012, 12, 21, 10, 10, 10);
+            reservation.Bis = new DateTime(2012, 12, 22, 10, 10, 10);
+            reservation.KundeId = 3;
+            Target.Update(reservation);
+
+            Reservation actualReservation = Target.GetById(1);
+            Assert.Equal(2, actualReservation.AutoId);
+            Assert.Equal(new DateTime(2012, 12, 21, 10, 10, 10), actualReservation.Von);
+            Assert.Equal(new DateTime(2012, 12, 22, 10, 10, 10), actualReservation.Bis);
+            Assert.Equal(3, actualReservation.KundeId);
         }
 
         [Fact]

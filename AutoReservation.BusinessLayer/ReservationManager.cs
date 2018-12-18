@@ -92,6 +92,15 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
+        public Reservation GetLastReservation()
+        {
+            using (AutoReservationContext context = new AutoReservationContext())
+            {
+                return context.Reservationen
+                    .LastOrDefault();
+            }
+        }
+
         private static void ValidateDateAndAuto(Reservation reservation)
         {
             if (!AreDatesTwentyForHours(reservation.Von, reservation.Bis))
