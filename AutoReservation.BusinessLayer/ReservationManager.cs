@@ -97,6 +97,8 @@ namespace AutoReservation.BusinessLayer
             using (AutoReservationContext context = new AutoReservationContext())
             {
                 return context.Reservationen
+                    .Include(r => r.Kunde)
+                    .Include(r => r.Auto)
                     .LastOrDefault();
             }
         }

@@ -14,6 +14,9 @@ namespace AutoReservation.Common.Interfaces
         AutoDto GetAutoById(int autoId);
 
         [OperationContract]
+        AutoDto GetLastAuto();
+
+        [OperationContract]
         void InsertAuto(AutoDto auto);
 
         [OperationContract]
@@ -31,6 +34,9 @@ namespace AutoReservation.Common.Interfaces
         KundeDto GetKundeById(int kundeId);
 
         [OperationContract]
+        KundeDto GetLastKunde();
+
+        [OperationContract]
         void InsertKunde(KundeDto auto);
 
         [OperationContract]
@@ -46,6 +52,9 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         ReservationDto GetReservationById(int ReservationId);
+
+        [OperationContract]
+        ReservationDto GetLastReservation();
 
         [OperationContract]
         [FaultContract(typeof(OptimisticConcurrencyFault))]
