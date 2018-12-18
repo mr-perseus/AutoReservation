@@ -17,9 +17,9 @@ namespace AutoReservation.BusinessLayer.Testing
             kunde.Nachname = "Smith";
             Target.Update(kunde);
 
-            Kunde kundeActual = Target.GetById(kunde.Id);
+            Kunde actualKunde = Target.GetById(kunde.Id);
 
-            Assert.Equal(kunde.Nachname, kundeActual.Nachname);
+            Assert.Equal(kunde.Nachname, actualKunde.Nachname);
         }
     }
 }

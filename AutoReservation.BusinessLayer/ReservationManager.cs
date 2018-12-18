@@ -29,7 +29,6 @@ namespace AutoReservation.BusinessLayer
         {
             var list = List.Where(r => r.AutoId == auto.Id);
             return new List<Reservation>(list);
-       
         }
 
         public void Add(Reservation reservation)
@@ -39,7 +38,7 @@ namespace AutoReservation.BusinessLayer
                 try
                 {
                     ValidateDateAndAuto(reservation);
-                    context.Add(reservation);
+                    context.Entry(reservation).State = EntityState.Added;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -56,7 +55,7 @@ namespace AutoReservation.BusinessLayer
                 try
                 {
                     ValidateDateAndAuto(reservation);
-                    context.Update(reservation);
+                    context.Entry(reservation).State = EntityState.Modified;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
@@ -72,7 +71,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Remove(reservation);
+                    context.Entry(reservation).State = EntityState.Deleted;
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)

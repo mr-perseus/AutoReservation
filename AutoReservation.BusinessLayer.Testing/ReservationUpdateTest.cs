@@ -18,9 +18,9 @@ namespace AutoReservation.BusinessLayer.Testing
             reservation.Bis = new DateTime(2022, 1, 1);
             Target.Update(reservation);
 
-            Reservation reservationActual = Target.GetById(reservation.ReservationsNr);
+            Reservation actualReservation = Target.GetById(reservation.ReservationsNr);
 
-            Assert.Equal(reservation.Bis, reservationActual.Bis);
+            Assert.Equal(reservation.Bis, actualReservation.Bis);
         }
     }
 }
