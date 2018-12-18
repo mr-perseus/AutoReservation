@@ -72,5 +72,10 @@ namespace AutoReservation.BusinessLayer
         {
             return List.FirstOrDefault(entry => entry.Id == id);
         }
+
+        public Kunde GetLastKunde()
+        {
+            return List.LastOrDefault();
+        }
     }
 }

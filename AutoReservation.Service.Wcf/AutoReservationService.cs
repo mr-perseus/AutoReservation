@@ -23,6 +23,14 @@ namespace AutoReservation.Service.Wcf
                 .ConvertToDto();
         }
 
+        public AutoDto GetLastAuto()
+        {
+            WriteActualMethod();
+            return new AutoManager()
+                .GetLastAuto()
+                .ConvertToDto();
+        }
+
         public void InsertAuto(AutoDto auto)
         {
             WriteActualMethod();
@@ -100,6 +108,14 @@ namespace AutoReservation.Service.Wcf
                 .ConvertToDto();
         }
 
+        public KundeDto GetLastKunde()
+        {
+            WriteActualMethod();
+            return new KundeManager()
+                .GetLastKunde()
+                .ConvertToDto();
+        }
+
         public void InsertKunde(KundeDto kunde)
         {
             WriteActualMethod();
@@ -171,6 +187,14 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
             return new ReservationManager()
                 .GetById(reservationId)
+                .ConvertToDto();
+        }
+
+        public ReservationDto GetLastReservation()
+        {
+            WriteActualMethod();
+            return new ReservationManager()
+                .GetLastReservation()
                 .ConvertToDto();
         }
 
@@ -283,6 +307,8 @@ namespace AutoReservation.Service.Wcf
 
             return reservationDtos;
         }
+
+        
         
 
         public bool IsCarAvailable(AutoDto auto, DateTime date)

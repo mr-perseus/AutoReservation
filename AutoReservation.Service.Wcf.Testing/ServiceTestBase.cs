@@ -111,7 +111,7 @@ namespace AutoReservation.Service.Wcf.Testing
             AutoDto newauto = new AutoDto {Basistarif = 50, Marke = "Chrysler", Tagestarif = 60};
                 
             Target.InsertAuto(newauto);
-            AutoDto autotocompare = Target.GetAutoById(5);
+            AutoDto autotocompare = Target.GetLastAuto();
             Assert.Equal(newauto.Marke, autotocompare.Marke);
             Assert.Equal(newauto.Basistarif, autotocompare.Basistarif);
             Assert.Equal(newauto.Tagestarif, autotocompare.Tagestarif);
@@ -128,7 +128,7 @@ namespace AutoReservation.Service.Wcf.Testing
             };
 
             Target.InsertKunde(newkunde);
-            KundeDto kundetocompare = Target.GetKundeById(5);
+            KundeDto kundetocompare = Target.GetLastKunde();
             Assert.Equal(newkunde.Nachname, kundetocompare.Nachname);
             Assert.Equal(newkunde.Geburtsdatum, kundetocompare.Geburtsdatum);
             Assert.Equal(newkunde.Vorname, kundetocompare.Vorname);
@@ -146,7 +146,7 @@ namespace AutoReservation.Service.Wcf.Testing
             };
 
             Target.InsertReservation(newreservation);
-            ReservationDto reservationtocompare = Target.GetReservationById(5);
+            ReservationDto reservationtocompare = Target.GetLastReservation();
             Assert.Equal(newreservation.Auto.Id, reservationtocompare.Auto.Id);
             Assert.Equal(newreservation.Kunde.Id, reservationtocompare.Kunde.Id);
             Assert.Equal(newreservation.Von, newreservation.Von);
