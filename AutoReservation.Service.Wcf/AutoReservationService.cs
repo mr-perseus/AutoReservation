@@ -33,46 +33,43 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateAuto(AutoDto auto)
         {
-
+            WriteActualMethod();
+            Auto autoEntity = auto.ConvertToEntity();
             try
             {
-                WriteActualMethod();
-                Auto autoEntity = auto.ConvertToEntity();
                 new AutoManager()
                     .Update(autoEntity);
             }
-            catch (OptimisticConcurrencyException<Auto> e)
+            catch (OptimisticConcurrencyException<Auto>)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
-                    {
-                        Operation = "Update",
-                        Description = "Auto could not be updated. Optimistic Concurrency Fault!"
-                    }
-                    );
+                OptimisticConcurrencyFault<AutoDto> fault = new OptimisticConcurrencyFault<AutoDto>
+                {
+                    FaultEntity = auto,
+                    CurrentEntity = autoEntity.ConvertToDto()
+                };
+                throw new FaultException<OptimisticConcurrencyFault<AutoDto>>(fault);
             }
 
         }
 
         public void DeleteAuto(AutoDto auto)
         {
+            WriteActualMethod();
+            Auto autoEntity = auto.ConvertToEntity();
             try
             {
-                WriteActualMethod();
-                Auto autoEntity = auto.ConvertToEntity();
+
                 new AutoManager()
                     .Remove(autoEntity);
             }
-            catch (OptimisticConcurrencyException<Auto> e)
+            catch (OptimisticConcurrencyException<Auto>)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
-                    {
-                        Operation = "Delete",
-                        Description = "Auto could not be removed. Either it was edited by someone else or it has been removed already."
-                    }
-                        
-                );
+                OptimisticConcurrencyFault<AutoDto> fault = new OptimisticConcurrencyFault<AutoDto>
+                {
+                    FaultEntity = auto,
+                    CurrentEntity = autoEntity.ConvertToDto()
+                };
+                throw new FaultException<OptimisticConcurrencyFault<AutoDto>>(fault);
             }
         }
 
@@ -110,43 +107,43 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateKunde(KundeDto kunde)
         {
+            WriteActualMethod();
+            Kunde kundeEntity = kunde.ConvertToEntity();
             try
             {
-                WriteActualMethod();
-                Kunde kundeEntity = kunde.ConvertToEntity();
+
                 new KundeManager()
                     .Update(kundeEntity);
             }
-            catch (OptimisticConcurrencyException<Kunde> e)
+            catch (OptimisticConcurrencyException<KundeDto>)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
-                    {
-                        Operation = "Update",
-                        Description = "Kunde could not be updated. OptimisticConcurrency Fault!"
-                    }
-                );
+                OptimisticConcurrencyFault<KundeDto> fault = new OptimisticConcurrencyFault<KundeDto>
+                {
+                    FaultEntity = kunde,
+                    CurrentEntity = kundeEntity.ConvertToDto()
+                };
+                throw new FaultException<OptimisticConcurrencyFault<KundeDto>>(fault);
             }
         }
 
         public void DeleteKunde(KundeDto kunde)
         {
+            WriteActualMethod();
+            Kunde kundeEntity = kunde.ConvertToEntity();
             try
             {
-                WriteActualMethod();
-                Kunde kundeEntity = kunde.ConvertToEntity();
+
                 new KundeManager()
                     .Remove(kundeEntity);
             }
-            catch (OptimisticConcurrencyException<Kunde> e)
+            catch (OptimisticConcurrencyException<KundeDto>)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
-                    {
-                        Operation = "Delete",
-                        Description = "Kunde could not be removed. Either it was edited by someone else or it has been removed already."
-                    }
-                );
+                OptimisticConcurrencyFault<KundeDto> fault = new OptimisticConcurrencyFault<KundeDto>
+                {
+                    FaultEntity = kunde,
+                    CurrentEntity = kundeEntity.ConvertToDto()
+                };
+                throw new FaultException<OptimisticConcurrencyFault<KundeDto>>(fault);
             }
         }
 
@@ -210,22 +207,22 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateReservation(ReservationDto reservation)
         {
+            WriteActualMethod();
+            Reservation reservationEntity = reservation.ConvertToEntity();
             try
             {
-                WriteActualMethod();
-                Reservation reservationEntity = reservation.ConvertToEntity();
+
                 new ReservationManager()
                     .Update(reservationEntity);
             }
-            catch (OptimisticConcurrencyException<Reservation> e)
+            catch (OptimisticConcurrencyException<ReservationDto>)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
-                    {
-                        Operation = "Update",
-                        Description = "Reservation could not be updated. OptimisticConcurrency Fault!"
-                    }
-                );
+                OptimisticConcurrencyFault<ReservationDto> fault = new OptimisticConcurrencyFault<ReservationDto>
+                {
+                    FaultEntity = reservation,
+                    CurrentEntity = reservationEntity.ConvertToDto()
+                };
+                throw new FaultException<OptimisticConcurrencyFault<ReservationDto>>(fault);
             }
             catch (InvalidDateRangeException e)
             {
@@ -253,22 +250,22 @@ namespace AutoReservation.Service.Wcf
 
         public void DeleteReservation(ReservationDto reservation)
         {
+            WriteActualMethod();
+            Reservation reservationEntity = reservation.ConvertToEntity();
             try
             {
-                WriteActualMethod();
-                Reservation reservationEntity = reservation.ConvertToEntity();
+
                 new ReservationManager()
                     .Remove(reservationEntity);
             }
-            catch (OptimisticConcurrencyException<Reservation> e)
+            catch (OptimisticConcurrencyException<ReservationDto>)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
-                    {
-                        Operation = "Delete",
-                        Description = "Reservation could not be removed. Either it was edited by someone else or it has been removed already."
-                    }
-                );
+                OptimisticConcurrencyFault<ReservationDto> fault = new OptimisticConcurrencyFault<ReservationDto>
+                {
+                    FaultEntity = reservation,
+                    CurrentEntity = reservationEntity.ConvertToDto()
+                };
+                throw new FaultException<OptimisticConcurrencyFault<ReservationDto>>(fault);
             }
         }
 

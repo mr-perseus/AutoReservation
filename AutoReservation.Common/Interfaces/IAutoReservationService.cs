@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Common.Interfaces
 {
@@ -59,6 +60,6 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         bool IsCarAvailable(AutoDto auto, DateTime date);
 
-
+        [FaultContract(typeof(OptimisticConcurrencyFault))]
     }
 }

@@ -246,7 +246,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             Target.UpdateAuto(autotoupdate1);
 
-            Assert.Throws<FaultException<OptimisticConcurrencyFault>>(() => Target.UpdateAuto(autotoupdate2));
+            Assert.Throws<FaultException<OptimisticConcurrencyFault<AutoDto>>>(() => Target.UpdateAuto(autotoupdate2));
 
         }
 
@@ -261,7 +261,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             Target.UpdateKunde(kundetoupdate1);
 
-            Assert.Throws<FaultException<OptimisticConcurrencyFault>>(() => Target.UpdateKunde(kundetoupdate2));
+            Assert.Throws<FaultException<OptimisticConcurrencyFault<KundeDto>>>(() => Target.UpdateKunde(kundetoupdate2));
 
         }
 
@@ -276,7 +276,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             Target.UpdateReservation(reservationtoupdate1);
 
-            Assert.Throws<FaultException<OptimisticConcurrencyFault>>(() => Target.UpdateReservation(reservationtoupdate2));
+            Assert.Throws<FaultException<OptimisticConcurrencyFault<ReservationDto>>>(() => Target.UpdateReservation(reservationtoupdate2));
         }
 
         #endregion

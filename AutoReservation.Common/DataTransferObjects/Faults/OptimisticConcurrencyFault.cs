@@ -8,14 +8,12 @@ using System.Threading.Tasks;
 namespace AutoReservation.Common.DataTransferObjects.Faults
 {
     [DataContract]
-    public class OptimisticConcurrencyFault
+    public class OptimisticConcurrencyFault<T>
     {
         [DataMember]
-        public string Operation { get; set; }
+        public T CurrentEntity { get; set; }
 
         [DataMember]
-        public string Description { get; set; }
+        public T FaultEntity { get; set; }
     }
-
-
 }
