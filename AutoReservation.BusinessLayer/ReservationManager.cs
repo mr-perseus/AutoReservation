@@ -121,7 +121,7 @@ namespace AutoReservation.BusinessLayer
                 var count = from reservation in context.Reservationen
                     where reservation.AutoId == reservationToCreate.AutoId &&
                           reservation.ReservationsNr != reservationToCreate.ReservationsNr &&
-                          (reservationToCreate.Von <= reservation.Von && reservationToCreate.Von > reservation.Von ||
+                          (reservationToCreate.Von <= reservation.Von && reservationToCreate.Bis > reservation.Von ||
                            reservationToCreate.Von >= reservation.Von && reservationToCreate.Von < reservation.Bis)
                     select reservationToCreate;
 
