@@ -219,13 +219,13 @@ namespace AutoReservation.Service.Wcf
             }
             catch (OptimisticConcurrencyException<Reservation> e)
             {
-                throw new FaultException<OptimisticConcurrencyFault>(
-                    new OptimisticConcurrencyFault
+                OptimisticConcurrencyFault optimisticConcurrencyFault =
+                    new OptimisticConcurrencyFault()
                     {
                         Operation = "Update",
                         Description = "Reservation could not be updated. OptimisticConcurrency Fault!"
-                    }
-                );
+                    };
+                throw new FaultException<OptimisticConcurrencyFault>(optimisticConcurrencyFault, e.Message);
             }
             catch (InvalidDateRangeException e)
             {

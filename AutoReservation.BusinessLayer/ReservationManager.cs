@@ -60,6 +60,7 @@ namespace AutoReservation.BusinessLayer
                 {
                     ValidateDateAndAuto(reservation);
                     context.Update(reservation);
+                    
                     context.SaveChanges();
                 }
                 catch (DbUpdateException exception)
