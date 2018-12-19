@@ -9,9 +9,10 @@ namespace AutoReservation.BusinessLayer
         protected void HandleDbUpdateException<T>(DbUpdateException exception, AutoReservationContext context, T entity)
             where T : class
         {
-            if (exception is DbUpdateConcurrencyException) throw CreateOptimisticConcurrencyException(context, entity);
+            if (exception is DbUpdateConcurrencyException)
+                throw CreateOptimisticConcurrencyException(context, entity);
 
-            // TODO Other possibilities
+            throw exception;
         }
 
         protected static OptimisticConcurrencyException<T> CreateOptimisticConcurrencyException<T>(
