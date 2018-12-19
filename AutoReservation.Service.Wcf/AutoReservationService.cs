@@ -1,20 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.ServiceModel;
 using AutoReservation.BusinessLayer;
 using AutoReservation.BusinessLayer.Exceptions;
 using AutoReservation.Common.DataTransferObjects;
-using AutoReservation.Common.Interfaces;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using AutoReservation.Common.Interfaces;
 using AutoReservation.Dal.Entities;
 
 namespace AutoReservation.Service.Wcf
 {
     public class AutoReservationService : IAutoReservationService
     {
+        private static void WriteActualMethod()
+        {
+            Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
+        }
+
         #region Auto
+
         public AutoDto GetAutoById(int autoId)
         {
             WriteActualMethod();
@@ -41,7 +46,6 @@ namespace AutoReservation.Service.Wcf
 
         public void UpdateAuto(AutoDto auto)
         {
-
             try
             {
                 WriteActualMethod();
@@ -57,9 +61,8 @@ namespace AutoReservation.Service.Wcf
                         Operation = "Update",
                         Description = "Auto could not be updated. Optimistic Concurrency Fault!"
                     }
-                    );
+                );
             }
-
         }
 
         public void DeleteAuto(AutoDto auto)
@@ -77,9 +80,9 @@ namespace AutoReservation.Service.Wcf
                     new OptimisticConcurrencyFault
                     {
                         Operation = "Delete",
-                        Description = "Auto could not be removed. Either it was edited by someone else or it has been removed already."
+                        Description =
+                            "Auto could not be removed. Either it was edited by someone else or it has been removed already."
                     }
-                        
                 );
             }
         }
@@ -87,12 +90,9 @@ namespace AutoReservation.Service.Wcf
         public List<AutoDto> AutoList()
         {
             WriteActualMethod();
-            List<AutoDto> autoDtos = new List<AutoDto>();
-            List<Auto> autoEntities = new AutoManager().List;
-            foreach (Auto a in autoEntities)
-            {
-                autoDtos.Add(a.ConvertToDto());
-            }
+            var autoDtos = new List<AutoDto>();
+            var autoEntities = new AutoManager().List;
+            foreach (Auto a in autoEntities) autoDtos.Add(a.ConvertToDto());
             return autoDtos;
         }
 
@@ -160,7 +160,8 @@ namespace AutoReservation.Service.Wcf
                     new OptimisticConcurrencyFault
                     {
                         Operation = "Delete",
-                        Description = "Kunde could not be removed. Either it was edited by someone else or it has been removed already."
+                        Description =
+                            "Kunde could not be removed. Either it was edited by someone else or it has been removed already."
                     }
                 );
             }
@@ -169,12 +170,9 @@ namespace AutoReservation.Service.Wcf
         public List<KundeDto> KundeList()
         {
             WriteActualMethod();
-            List<KundeDto> kundeDtos = new List<KundeDto>();
-            List<Kunde> kundeEntities = new KundeManager().List;
-            foreach (Kunde k in kundeEntities)
-            {
-                kundeDtos.Add(k.ConvertToDto());
-            }
+            var kundeDtos = new List<KundeDto>();
+            var kundeEntities = new KundeManager().List;
+            foreach (Kunde k in kundeEntities) kundeDtos.Add(k.ConvertToDto());
             return kundeDtos;
         }
 
@@ -216,7 +214,6 @@ namespace AutoReservation.Service.Wcf
                         Description = "Reservation could not be inserted. Date invalid!"
                     }
                 );
-
             }
             catch (AutoUnavailableException e)
             {
@@ -225,11 +222,9 @@ namespace AutoReservation.Service.Wcf
                     {
                         Operation = "Insert",
                         Description = "Reservation could not be inserted. Car already reserved!"
-
                     }
-                    );
+                );
             }
-             
         }
 
         public void UpdateReservation(ReservationDto reservation)
@@ -244,7 +239,7 @@ namespace AutoReservation.Service.Wcf
             catch (OptimisticConcurrencyException<Reservation> e)
             {
                 OptimisticConcurrencyFault optimisticConcurrencyFault =
-                    new OptimisticConcurrencyFault()
+                    new OptimisticConcurrencyFault
                     {
                         Operation = "Update",
                         Description = "Reservation could not be updated. OptimisticConcurrency Fault!"
@@ -260,7 +255,6 @@ namespace AutoReservation.Service.Wcf
                         Description = "Reservation could not be inserted. Date invalid!"
                     }
                 );
-
             }
             catch (AutoUnavailableException e)
             {
@@ -269,7 +263,6 @@ namespace AutoReservation.Service.Wcf
                     {
                         Operation = "Insert",
                         Description = "Reservation could not be inserted. Car already reserved!"
-
                     }
                 );
             }
@@ -290,7 +283,8 @@ namespace AutoReservation.Service.Wcf
                     new OptimisticConcurrencyFault
                     {
                         Operation = "Delete",
-                        Description = "Reservation could not be removed. Either it was edited by someone else or it has been removed already."
+                        Description =
+                            "Reservation could not be removed. Either it was edited by someone else or it has been removed already."
                     }
                 );
             }
@@ -298,40 +292,23 @@ namespace AutoReservation.Service.Wcf
 
         public List<ReservationDto> ReservationList()
         {
-            List<ReservationDto> reservationDtos = new List<ReservationDto>();
-            List<Reservation> reservationEntities = new ReservationManager().List;
-            foreach (Reservation r in reservationEntities)
-            {
-                reservationDtos.Add(r.ConvertToDto());
-            }
+            var reservationDtos = new List<ReservationDto>();
+            var reservationEntities = new ReservationManager().List;
+            foreach (Reservation r in reservationEntities) reservationDtos.Add(r.ConvertToDto());
 
             return reservationDtos;
         }
 
-        
-        
 
         public bool IsCarAvailable(AutoDto auto, DateTime date)
         {
             var list = new ReservationManager().ListWhere(auto.ConvertToEntity());
-            foreach (var item in list)
-            {
+            foreach (Reservation item in list)
                 if (item.Von > date || item.Bis < date)
-                {
                     return false;
-                }
-            }
             return true;
         }
 
-
-
-
-
         #endregion
-
-        private static void WriteActualMethod()
-            => Console.WriteLine($"Calling: {new StackTrace().GetFrame(1).GetMethod().Name}");
-
     }
 }

@@ -7,25 +7,27 @@ namespace AutoReservation.Service.Wcf.Testing
 {
     public class ServiceTestRemote
         : ServiceTestBase
-        , IClassFixture<ServiceTestRemoteFixture>
+            , IClassFixture<ServiceTestRemoteFixture>
     {
         private readonly ServiceTestRemoteFixture serviceTestRemoteFixture;
+
+        private IAutoReservationService target;
 
         public ServiceTestRemote(ServiceTestRemoteFixture serviceTestRemoteFixture)
         {
             this.serviceTestRemoteFixture = serviceTestRemoteFixture;
         }
 
-        private IAutoReservationService target;
         protected override IAutoReservationService Target
         {
             get
             {
                 if (target == null)
                 {
-                    ChannelFactory<IAutoReservationService> channelFactory = new ChannelFactory<IAutoReservationService>("AutoReservationService");
+                    var channelFactory = new ChannelFactory<IAutoReservationService>("AutoReservationService");
                     target = channelFactory.CreateChannel();
                 }
+
                 return target;
             }
         }
@@ -40,14 +42,11 @@ namespace AutoReservation.Service.Wcf.Testing
             ServiceHost.Open();
         }
 
+        public ServiceHost ServiceHost { get; }
+
         public void Dispose()
         {
-            if (ServiceHost.State != CommunicationState.Closed)
-            {
-                ServiceHost.Close();
-            }
+            if (ServiceHost.State != CommunicationState.Closed) ServiceHost.Close();
         }
-
-        public ServiceHost ServiceHost { get; }
     }
 }

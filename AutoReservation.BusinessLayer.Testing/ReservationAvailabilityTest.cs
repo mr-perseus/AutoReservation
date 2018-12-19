@@ -88,7 +88,8 @@ namespace AutoReservation.BusinessLayer.Testing
                 Bis = DateTime.Today.AddDays(6),
                 KundeId = 3
             };
-            Reservation reservation2 = new Reservation {Von = new DateTime(1990, 1, 1), Bis = new DateTime(1991, 1, 1), AutoId = 1, KundeId = 1};
+            Reservation reservation2 = new Reservation
+                {Von = new DateTime(1990, 1, 1), Bis = new DateTime(1991, 1, 1), AutoId = 1, KundeId = 1};
             Target.Add(reservation);
             Target.Add(reservation2);
 
@@ -112,7 +113,8 @@ namespace AutoReservation.BusinessLayer.Testing
                 Bis = DateTime.Today.AddDays(10),
                 KundeId = 3
             };
-            Reservation reservation2 = new Reservation { Von = new DateTime(1990, 1, 1), Bis = new DateTime(1991, 1, 1), AutoId = 1, KundeId = 1 };
+            Reservation reservation2 = new Reservation
+                {Von = new DateTime(1990, 1, 1), Bis = new DateTime(1991, 1, 1), AutoId = 1, KundeId = 1};
             Target.Add(reservation);
             Target.Add(reservation2);
 

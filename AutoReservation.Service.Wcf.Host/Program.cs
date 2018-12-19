@@ -5,10 +5,10 @@ namespace AutoReservation.Service.Wcf.Host
 {
     public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
             Console.WriteLine("AutoReservationService starting.");
-            
+
             // Instantiate new ServiceHost 
             ServiceHost host = new ServiceHost(typeof(AutoReservationService));
 
@@ -22,10 +22,7 @@ namespace AutoReservation.Service.Wcf.Host
             Console.ReadLine();
 
             // Stop ServiceHost
-            if (host.State != CommunicationState.Closed)
-            {
-                host.Close();
-            }
+            if (host.State != CommunicationState.Closed) host.Close();
         }
     }
 }

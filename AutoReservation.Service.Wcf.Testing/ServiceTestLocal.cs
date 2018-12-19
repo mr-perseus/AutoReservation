@@ -2,7 +2,7 @@
 
 namespace AutoReservation.Service.Wcf.Testing
 {
-    public class ServiceTestLocal 
+    public class ServiceTestLocal
         : ServiceTestBase
     {
         private IAutoReservationService target;

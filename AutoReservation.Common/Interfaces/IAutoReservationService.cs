@@ -6,7 +6,6 @@ using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.Common.Interfaces
 {
-
     [ServiceContract]
     public interface IAutoReservationService
     {
@@ -76,7 +75,5 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         bool IsCarAvailable(AutoDto auto, DateTime date);
-
-
     }
 }
