@@ -41,7 +41,7 @@ namespace AutoReservation.BusinessLayer.Testing
         }
 
         [Fact]
-        public void ScenarioOkay01Test()
+        public void SingleUpdateReservationTimeNowTest()
         {
             Reservation reservation = Target.GetById(1);
             reservation.Von = DateTime.Today;
@@ -54,7 +54,7 @@ namespace AutoReservation.BusinessLayer.Testing
         }
 
         [Fact]
-        public void ScenarioOkay02Test()
+        public void SingleUpdateReservationTimeOldTest()
         {
             Reservation reservation = Target.GetById(1);
             reservation.Von = new DateTime(2012, 12, 21, 10, 10, 10);

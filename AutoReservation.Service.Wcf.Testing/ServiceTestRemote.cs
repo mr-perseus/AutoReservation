@@ -9,26 +9,26 @@ namespace AutoReservation.Service.Wcf.Testing
         : ServiceTestBase
             , IClassFixture<ServiceTestRemoteFixture>
     {
-        private readonly ServiceTestRemoteFixture serviceTestRemoteFixture;
+        private readonly ServiceTestRemoteFixture _serviceTestRemoteFixture;
 
-        private IAutoReservationService target;
+        private IAutoReservationService _target;
 
         public ServiceTestRemote(ServiceTestRemoteFixture serviceTestRemoteFixture)
         {
-            this.serviceTestRemoteFixture = serviceTestRemoteFixture;
+            _serviceTestRemoteFixture = serviceTestRemoteFixture;
         }
 
         protected override IAutoReservationService Target
         {
             get
             {
-                if (target == null)
+                if (_target == null)
                 {
                     var channelFactory = new ChannelFactory<IAutoReservationService>("AutoReservationService");
-                    target = channelFactory.CreateChannel();
+                    _target = channelFactory.CreateChannel();
                 }
 
-                return target;
+                return _target;
             }
         }
     }
